@@ -2,15 +2,11 @@ package com.github.gs618.sprouts.programflow;
 
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-import java.util.Objects;
-import java.util.Optional;
-
 /**
  * @author sgao
  */
 @EqualsAndHashCode
-public abstract class BaseStep implements Handler<Input, Output>, Serializable {
+public abstract class BaseStep {
 
 	private BaseStep nextStep;
 
@@ -19,8 +15,7 @@ public abstract class BaseStep implements Handler<Input, Output>, Serializable {
 		return this.nextStep;
 	}
 
-	@Override
-	public void start(Input input, Output output) {
+	public BaseStep run(Input input, Output output) {
 		try {
 			output.currentStep = this;
 			handle(input);
@@ -28,13 +23,13 @@ public abstract class BaseStep implements Handler<Input, Output>, Serializable {
 		} catch (Exception e) {
 			output.exception = e;
 		}
-
-		if (Objects.nonNull(output.exception)) {
-			return;
-		}
-
-		Optional.ofNullable(nextStep).ifPresent(nextStep -> nextStep.start(input, output));
+		return nextStep;
 	}
 
+	/**
+	 * What a step can do
+	 *
+	 * @param input
+	 */
 	public abstract void handle(Input input);
 }

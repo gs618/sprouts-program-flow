@@ -11,10 +11,12 @@ public class ProcessTest extends BaseProcess {
 		StepAssign stepAssign = new StepAssign();
 		StepValueBiggerThanZero stepValueBiggerThanZero = new StepValueBiggerThanZero();
 		StepValueSmallerhanZero stepValueSmallerhanZero = new StepValueSmallerhanZero();
+		StepException stepException = new StepException();
 		StepIf stepIf = new StepIf();
 
-		firstStep = stepAssign;
+		setFirstStep(stepAssign);
 		stepAssign.next(stepIf);
+		stepValueBiggerThanZero.next(stepException);
 
 		stepIf.next(input -> {
 					Object threshold = input.getData("THRESHOLD");
@@ -36,6 +38,5 @@ public class ProcessTest extends BaseProcess {
 				}
 				, stepValueSmallerhanZero);
 	}
-
 
 }
