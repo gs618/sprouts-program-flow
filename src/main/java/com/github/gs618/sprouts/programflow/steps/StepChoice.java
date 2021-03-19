@@ -2,6 +2,7 @@ package com.github.gs618.sprouts.programflow.steps;
 
 import com.github.gs618.sprouts.programflow.BaseStep;
 import com.github.gs618.sprouts.programflow.Input;
+import com.github.gs618.sprouts.programflow.Output;
 import com.github.gs618.sprouts.programflow.exception.StepRuntimeException;
 
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.Map;
 public class StepChoice extends BaseStep {
 
 	@Override
-	public void handle(Input input) {
+	public void handle(Input input, Output output) {
 		try {
 			for (Map.Entry<Expression<Input>, BaseStep> expressionBaseStepEntry : branches.entrySet()) {
 				if (expressionBaseStepEntry.getKey().compare(input)) {

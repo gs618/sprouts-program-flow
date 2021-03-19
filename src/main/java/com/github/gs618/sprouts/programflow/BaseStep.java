@@ -18,7 +18,7 @@ public abstract class BaseStep {
 	public BaseStep run(Input input, Output output) {
 		try {
 			output.currentStep = this;
-			handle(input);
+			handle(input, output);
 			output.passedSteps.add(this);
 		} catch (Exception e) {
 			output.exception = e;
@@ -29,7 +29,8 @@ public abstract class BaseStep {
 	/**
 	 * What a step can do
 	 *
-	 * @param input
+	 * @param input input
+	 * @param output output
 	 */
-	public abstract void handle(Input input);
+	public abstract void handle(Input input, Output output);
 }

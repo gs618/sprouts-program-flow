@@ -5,6 +5,7 @@ import com.github.gs618.sprouts.programflow.Output;
 import org.junit.Test;
 import test.com.github.gs618.sprouts.programflow.process.ChoiceProcess;
 import test.com.github.gs618.sprouts.programflow.process.ExceptionProcess;
+import test.com.github.gs618.sprouts.programflow.process.ParallelRunProcess;
 
 public class AppTest {
 
@@ -48,4 +49,13 @@ public class AppTest {
 		exceptionProcess.printStepTrace(output);
 	}
 
+	@Test
+	public void parallelProcessTest() {
+		ParallelRunProcess parallelRunProcess = new ParallelRunProcess();
+		Input input = new Input();
+		input.putData("DATA", 99);
+		Output output = new Output();
+		parallelRunProcess.run(input, output);
+		parallelRunProcess.printStepTrace(output);
+	}
 }

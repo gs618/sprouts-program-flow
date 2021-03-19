@@ -4,10 +4,10 @@ import com.github.gs618.sprouts.programflow.BaseStep;
 import com.github.gs618.sprouts.programflow.Input;
 import com.github.gs618.sprouts.programflow.Output;
 
-public class StepValueBiggerThanHundred extends BaseStep {
+public class StepEnd extends BaseStep {
 
 	@Override
 	public void handle(Input input, Output output) {
-		System.out.println(input.getData("THRESHOLD").toString() + " > 100");
+		System.out.println("this is the last step");
 	}
 }
