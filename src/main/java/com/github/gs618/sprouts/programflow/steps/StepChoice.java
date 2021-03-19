@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * @author sgao
  */
-public class StepIf extends BaseStep {
+public class StepChoice extends BaseStep {
 
 	@Override
 	public void handle(Input input) {
