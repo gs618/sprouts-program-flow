@@ -1,13 +1,14 @@
 ## sprouts-program-flow
 
-工作流的开发版
+代码流程
 
-- [x] 同步流 
+- [x] 顺序流 
 
-- [ ] 异步流 
+- [x] 选择流（if..else) 
 
-- [ ] 状态管理 
+- [x] 并行流（multithread）
 
-### 同步流程
-使用sprouts-filter-pattern作为流程控制
+- [ ] 异步流
+
+
 
