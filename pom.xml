@@ -68,8 +68,6 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
-          <!-- Disable annotation processing for ourselves. -->
-          <compilerArgument>-proc:none</compilerArgument>
         </configuration>
       </plugin>
       <!-- source -->

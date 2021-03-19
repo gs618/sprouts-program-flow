@@ -1,11 +1,9 @@
-package test.com.github.gs618.sprouts.programflow;
+package test.com.github.gs618.sprouts.programflow.step;
 
 import com.github.gs618.sprouts.programflow.BaseStep;
 import com.github.gs618.sprouts.programflow.Input;
 
 public class StepValueSmallerhanZero extends BaseStep {
-
-	private static final long serialVersionUID = 2L;
 
 	@Override
 	public void handle(Input input) {

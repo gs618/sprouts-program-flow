@@ -7,8 +7,9 @@ package com.github.gs618.sprouts.programflow.steps;
 public interface Expression<T> {
 	/**
 	 * Invoke comparison expression
+	 * @param t source
 	 *
-	 * @return
+	 * @return if matches
 	 */
 	Boolean compare(T t);
 }
