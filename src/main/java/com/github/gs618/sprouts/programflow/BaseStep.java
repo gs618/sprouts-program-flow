@@ -32,5 +32,5 @@ public abstract class BaseStep {
 	 * @param input input
 	 * @param output output
 	 */
-	public abstract void handle(Input input, Output output);
+	protected abstract void handle(Input input, Output output);
 }
