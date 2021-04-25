@@ -27,11 +27,10 @@ public abstract class BaseProcess {
 	 */
 	public void run(Input input, Output output) {
 		BaseStep baseStep = getFirstStep().run(input, output);
-		while (Optional.ofNullable(baseStep).isPresent()) {
-			if (Objects.nonNull(output.getException())) {
-				break;
+		while (Objects.nonNull(baseStep)) {
+			if (Objects.isNull(output.getException())) {
+				baseStep = baseStep.run(input, output);
 			}
-			baseStep = baseStep.run(input, output);
 		}
 	}
 

@@ -21,13 +21,15 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class StepParallel extends BaseStep {
 
+	private static final int DEFAULT_CONCURRENCY = 5;
+	private static final int DEFAULT_BRANCH_SIZE= 10;
 	@Getter
 	private final int maxConcurrency;
 
 	private final ExecutorService executorService;
 
 	public StepParallel() {
-		this(5);
+		this(DEFAULT_CONCURRENCY);
 	}
 
 	public StepParallel(int maxConcurrency) {
@@ -48,7 +50,7 @@ public class StepParallel extends BaseStep {
 		}
 	}
 
-	List<BaseStep> branches = new ArrayList<>(10);
+	List<BaseStep> branches = new ArrayList<>(DEFAULT_BRANCH_SIZE);
 
 	public StepParallel addParallelBranch(BaseStep parallelStep) {
 		branches.add(parallelStep);

@@ -7,15 +7,14 @@
   <groupId>com.github.gs618</groupId>
   <artifactId>sprouts-program-flow</artifactId>
   <version>${revision}</version>
-  <name>sprouts filter pattern</name>
-  <description>advanced filter pattern</description>
+  <name>sprouts program flow</name>
+  <description>program flow</description>
   <url>https://github.com/gs618/sprouts-program-flow</url>
 
   <properties>
-    <revision>0.0.1</revision>
+    <revision>0.0.2</revision>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
-    <sprouts-filter-pattern.version>0.0.4</sprouts-filter-pattern.version>
     <lombok.version>1.18.16</lombok.version>
   </properties>
 
@@ -27,11 +26,6 @@
   </developers>
 
   <dependencies>
-    <dependency>
-      <groupId>com.github.gs618</groupId>
-      <artifactId>sprouts-filter-pattern</artifactId>
-      <version>${sprouts-filter-pattern.version}</version>
-    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>

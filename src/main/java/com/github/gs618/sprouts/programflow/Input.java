@@ -16,8 +16,8 @@ public class Input {
 	/**
 	 * 获取某个数据
 	 *
-	 * @param key
-	 * @param <T>
+	 * @param key data-key
+	 * @param <T> data type of value
 	 * @return
 	 */
 	public <T> T getData(String key) {
@@ -27,9 +27,9 @@ public class Input {
 	/**
 	 * 加入某个数据
 	 *
-	 * @param key
-	 * @param object
-	 * @param <T>
+	 * @param key data-key
+	 * @param object data-value
+	 * @param <T> data type of value
 	 */
 	public <T> void putData(String key, T object) {
 		data.put(key, object);
