@@ -10,4 +10,8 @@ public class StepRuntimeException extends RuntimeException {
 	public StepRuntimeException(Exception e) {
 		super(e);
 	}
+
+	public StepRuntimeException(String message) {
+		super(message);
+	}
 }

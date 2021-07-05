@@ -22,19 +22,27 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class StepParallel extends BaseStep {
 
 	private static final int DEFAULT_CONCURRENCY = 5;
-	private static final int DEFAULT_BRANCH_SIZE= 10;
+	private static final int DEFAULT_PARALLEL_BRANCH_SIZE = 10;
 	@Getter
-	private final int maxConcurrency;
+	private final int concurrency;
 
 	private final ExecutorService executorService;
 
-	public StepParallel() {
-		this(DEFAULT_CONCURRENCY);
+	@Getter
+	private final List<BaseStep> branches;
+
+	public static StepParallel newInstance() {
+		return new StepParallel();
 	}
 
-	public StepParallel(int maxConcurrency) {
-		this.maxConcurrency = maxConcurrency;
-		executorService = new ThreadPoolExecutor(maxConcurrency, maxConcurrency,
+	public StepParallel() {
+		this(DEFAULT_CONCURRENCY, DEFAULT_PARALLEL_BRANCH_SIZE);
+	}
+
+	public StepParallel(int concurrency, int parallelBranchSize) {
+		this.concurrency = concurrency;
+		branches = new ArrayList<>(parallelBranchSize);
+		executorService = new ThreadPoolExecutor(concurrency, concurrency,
 				0L, TimeUnit.MILLISECONDS,
 				new LinkedBlockingQueue<>(), new ParallelThreadFactory());
 	}
@@ -43,14 +51,12 @@ public class StepParallel extends BaseStep {
 	public void handle(Input input, Output output) {
 		try {
 			CompletableFuture.allOf(branches.stream().map(step ->
-					CompletableFuture.runAsync(() -> step.run(input, output), executorService)).toArray(CompletableFuture[]::new))
+					CompletableFuture.runAsync(() -> step.start(input, output), executorService)).toArray(CompletableFuture[]::new))
 					.join();
 		} catch (Exception e) {
 			throw new StepRuntimeException(e);
 		}
 	}
-
-	List<BaseStep> branches = new ArrayList<>(DEFAULT_BRANCH_SIZE);
 
 	public StepParallel addParallelBranch(BaseStep parallelStep) {
 		branches.add(parallelStep);

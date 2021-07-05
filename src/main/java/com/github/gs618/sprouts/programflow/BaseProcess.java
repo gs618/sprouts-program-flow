@@ -1,10 +1,12 @@
 package com.github.gs618.sprouts.programflow;
 
+import com.github.gs618.sprouts.programflow.exception.ProcessRuntimeException;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * @author sgao
@@ -12,6 +14,8 @@ import java.util.Optional;
 @Data
 @Accessors(chain = true)
 public abstract class BaseProcess {
+
+	private Logger logger = Logger.getLogger(this.getClass().getName());
 
 	protected BaseStep firstStep;
 
@@ -22,15 +26,17 @@ public abstract class BaseProcess {
 	/**
 	 * Run a process
 	 *
-	 * @param input input
+	 * @param input  input
 	 * @param output output
 	 */
-	public void run(Input input, Output output) {
-		BaseStep baseStep = getFirstStep().run(input, output);
-		while (Objects.nonNull(baseStep)) {
-			if (Objects.isNull(output.getException())) {
-				baseStep = baseStep.run(input, output);
-			}
+	public void start(Input input, Output output) {
+		if (Objects.isNull(getFirstStep())) {
+			output.exception = new ProcessRuntimeException("First step is not provided");
+			return;
+		}
+		BaseStep baseStep = getFirstStep().start(input, output);
+		while (Objects.nonNull(baseStep) && Objects.isNull(output.getException())) {
+			baseStep = baseStep.start(input, output);
 		}
 	}
 
@@ -39,12 +45,15 @@ public abstract class BaseProcess {
 	 *
 	 * @param output output
 	 */
-	public void printStepTrace(Output output){
+	public void printStepTrace(Output output) {
 		Optional.ofNullable(output.getException()).ifPresent(Exception::printStackTrace);
-		output.getPassedSteps().stream().map(step->step.getClass().getName() + " ... succeed").forEach(System.out::println);
 
-		if(!output.getCurrentStep().equals(output.getPassedSteps().get(output.getPassedSteps().size() - 1))) {
-			System.out.println(output.getCurrentStep().getClass().getName() + " ... failure");
+		if(output.getPassedSteps().isEmpty()) {
+			return;
+		}
+		output.getPassedSteps().stream().map(step -> step.getClass().getName() + " ... succeed").forEach(logger::info);
+		if (!output.getCurrentStep().equals(output.getPassedSteps().get(output.getPassedSteps().size() - 1))) {
+			logger.info(output.getCurrentStep().getClass().getName() + " ... failure");
 		}
 	}
 
