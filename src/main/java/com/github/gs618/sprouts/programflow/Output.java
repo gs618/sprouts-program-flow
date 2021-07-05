@@ -1,6 +1,7 @@
 package com.github.gs618.sprouts.programflow;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class Output {
 
   BaseStep currentStep;
 
+  @Setter
   Exception exception;
 
 }

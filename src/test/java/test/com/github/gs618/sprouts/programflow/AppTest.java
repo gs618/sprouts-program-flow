@@ -3,59 +3,67 @@ package test.com.github.gs618.sprouts.programflow;
 import com.github.gs618.sprouts.programflow.Input;
 import com.github.gs618.sprouts.programflow.Output;
 import org.junit.Test;
-import test.com.github.gs618.sprouts.programflow.process.ChoiceProcess;
-import test.com.github.gs618.sprouts.programflow.process.ExceptionProcess;
-import test.com.github.gs618.sprouts.programflow.process.ParallelRunProcess;
+import test.com.github.gs618.sprouts.programflow.process.GenerateVideoProcess;
+import test.com.github.gs618.sprouts.programflow.process.GenerateVideoProcessWithoutFirstStep;
 
+/**
+ * @author sgao
+ */
 public class AppTest {
 
 	@Test
-	public void choiceProcessLessThan0Test() {
-		ChoiceProcess choiceProcess = new ChoiceProcess();
-		Input input = new Input();
-		input.putData("DATA", -10);
-		Output output = new Output();
-		choiceProcess.run(input, output);
-		choiceProcess.printStepTrace(output);
-	}
-
-	@Test
-	public void choiceProcessMoreThan100Test() {
-		ChoiceProcess choiceProcess = new ChoiceProcess();
-		Input input = new Input();
-		input.putData("DATA", 108);
-		Output output = new Output();
-		choiceProcess.run(input, output);
-		choiceProcess.printStepTrace(output);
-	}
-
-	@Test
-	public void choiceProcessMoreThan0LessThan100Test() {
-		ChoiceProcess choiceProcess = new ChoiceProcess();
-		Input input = new Input();
-		input.putData("DATA", 76);
-		Output output = new Output();
-		choiceProcess.run(input, output);
-		choiceProcess.printStepTrace(output);
-	}
-
-	@Test
 	public void exceptionProcessTest() {
-		ExceptionProcess exceptionProcess = new ExceptionProcess();
+		GenerateVideoProcessWithoutFirstStep generateVideoProcessWithoutFirstStep = new GenerateVideoProcessWithoutFirstStep();
 		Input input = new Input();
-		input.putData("DATA", 99);
+		input.putData("FILE_SIZE", 2000L);
+		input.putData("TYPE", "AVI");
 		Output output = new Output();
-		exceptionProcess.run(input, output);
-		exceptionProcess.printStepTrace(output);
+		generateVideoProcessWithoutFirstStep.start(input, output);
+		generateVideoProcessWithoutFirstStep.printStepTrace(output);
 	}
 
 	@Test
-	public void parallelProcessTest() {
-		ParallelRunProcess parallelRunProcess = new ParallelRunProcess();
+	public void badFileTypeExceptionProcessTest() {
+		GenerateVideoProcess generateVideoProcess = new GenerateVideoProcess();
 		Input input = new Input();
-		input.putData("DATA", 99);
+		input.putData("FILE_SIZE", 2000L);
+		input.putData("TYPE", "MP3");
 		Output output = new Output();
-		parallelRunProcess.run(input, output);
-		parallelRunProcess.printStepTrace(output);
+		generateVideoProcess.start(input, output);
+		generateVideoProcess.printStepTrace(output);
 	}
+
+	@Test
+	public void normalAviProcessTest() {
+		GenerateVideoProcess generateVideoProcess = new GenerateVideoProcess();
+		Input input = new Input();
+		input.putData("FILE_SIZE", 50L);
+		input.putData("TYPE", "AVI");
+		Output output = new Output();
+		generateVideoProcess.start(input, output);
+		generateVideoProcess.printStepTrace(output);
+	}
+
+	@Test
+	public void normalMp4ProcessTest() {
+		GenerateVideoProcess generateVideoProcess = new GenerateVideoProcess();
+		Input input = new Input();
+		input.putData("FILE_SIZE", 2000L);
+		input.putData("TYPE", "MP4");
+		Output output = new Output();
+		generateVideoProcess.start(input, output);
+		generateVideoProcess.printStepTrace(output);
+	}
+
+	@Test
+	public void normalMkvProcessTest() {
+		GenerateVideoProcess generateVideoProcess = new GenerateVideoProcess();
+		Input input = new Input();
+		input.putData("FILE_SIZE", 9000L);
+		input.putData("TYPE", "MKV");
+		Output output = new Output();
+		generateVideoProcess.start(input, output);
+		generateVideoProcess.printStepTrace(output);
+	}
+
 }
