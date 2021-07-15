@@ -1,9 +1,10 @@
 package com.github.gs618.sprouts.programflow.steps;
 
-import com.github.gs618.sprouts.programflow.BaseStep;
+import com.github.gs618.sprouts.programflow.Step;
 import com.github.gs618.sprouts.programflow.Input;
 import com.github.gs618.sprouts.programflow.Output;
 import com.github.gs618.sprouts.programflow.exception.StepRuntimeException;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -19,46 +20,49 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author sgao
  */
-public class StepParallel extends BaseStep {
+@EqualsAndHashCode(callSuper = false)
+public class ParallelStep extends Step {
 
-	private static final int DEFAULT_CONCURRENCY = 5;
+	private static final int DEFAULT_CONCURRENCY = 10;
 	private static final int DEFAULT_PARALLEL_BRANCH_SIZE = 10;
-	@Getter
-	private final int concurrency;
 
-	private final ExecutorService executorService;
-
-	@Getter
-	private final List<BaseStep> branches;
-
-	public static StepParallel newInstance() {
-		return new StepParallel();
-	}
-
-	public StepParallel() {
-		this(DEFAULT_CONCURRENCY, DEFAULT_PARALLEL_BRANCH_SIZE);
-	}
-
-	public StepParallel(int concurrency, int parallelBranchSize) {
-		this.concurrency = concurrency;
-		branches = new ArrayList<>(parallelBranchSize);
-		executorService = new ThreadPoolExecutor(concurrency, concurrency,
+	private static final ExecutorService localExecutorService = new ThreadPoolExecutor(DEFAULT_CONCURRENCY, DEFAULT_CONCURRENCY,
 				0L, TimeUnit.MILLISECONDS,
 				new LinkedBlockingQueue<>(), new ParallelThreadFactory());
+
+	@Getter
+	final List<Step> branches;
+
+	public static ParallelStep newInstance() {
+		return new ParallelStep();
+	}
+
+	public ParallelStep() {
+		this(DEFAULT_PARALLEL_BRANCH_SIZE);
+	}
+
+	public ParallelStep(int parallelBranchSize) {
+		branches = new ArrayList<>(parallelBranchSize);
 	}
 
 	@Override
-	public void handle(Input input, Output output) {
+	protected void handle(Input input, Output output) {
 		try {
 			CompletableFuture.allOf(branches.stream().map(step ->
-					CompletableFuture.runAsync(() -> step.start(input, output), executorService)).toArray(CompletableFuture[]::new))
+					CompletableFuture.runAsync(() -> step.start(input, output), localExecutorService)).toArray(CompletableFuture[]::new))
 					.join();
 		} catch (Exception e) {
 			throw new StepRuntimeException(e);
 		}
 	}
 
-	public StepParallel addParallelBranch(BaseStep parallelStep) {
+	/**
+	 * add a branch for parallel running
+	 *
+	 * @param parallelStep a parallel branch
+	 * @return current parallel step
+	 */
+	public ParallelStep addParallelBranch(Step parallelStep) {
 		branches.add(parallelStep);
 		return this;
 	}
@@ -76,7 +80,7 @@ public class StepParallel extends BaseStep {
 			SecurityManager s = System.getSecurityManager();
 			group = (s != null) ? s.getThreadGroup() :
 					Thread.currentThread().getThreadGroup();
-			namePrefix = "step-parallel-" +
+			namePrefix = "Parallel-step-" +
 					POOL_NUMBER.getAndIncrement() +
 					"-thread-";
 		}

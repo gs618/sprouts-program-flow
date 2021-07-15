@@ -12,7 +12,7 @@
   <url>https://github.com/gs618/sprouts-program-flow</url>
 
   <properties>
-    <revision>0.0.3</revision>
+    <revision>0.0.4</revision>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
     <lombok.version>1.18.16</lombok.version>
@@ -49,7 +49,7 @@
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>repo</distribution>
     </license>
   </licenses>

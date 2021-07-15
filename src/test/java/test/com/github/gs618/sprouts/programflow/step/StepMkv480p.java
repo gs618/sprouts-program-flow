@@ -1,12 +1,12 @@
 package test.com.github.gs618.sprouts.programflow.step;
 
-import com.github.gs618.sprouts.programflow.BaseStep;
+import com.github.gs618.sprouts.programflow.Step;
 import com.github.gs618.sprouts.programflow.Input;
 import com.github.gs618.sprouts.programflow.Output;
 
 import java.util.concurrent.TimeUnit;
 
-public class StepMkv480p extends BaseStep {
+public class StepMkv480p extends Step {
 
 	@Override
 	public void handle(Input input, Output output) {
