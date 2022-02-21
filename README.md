@@ -4,11 +4,11 @@
 
 - [x] 顺序流 
 
-- [x] 选择流（if..else) 
+- [x] 选择流（if else) 
 
-- [x] 并行流（multithread）
+- [x] 并行流（Parallel）
 
-- [ ] 异步流
+- [x] 循环流 (for loop)
 
 
-
+![image](uml/Workflow.png)

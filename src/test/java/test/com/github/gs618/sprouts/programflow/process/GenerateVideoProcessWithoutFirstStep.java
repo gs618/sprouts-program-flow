@@ -1,8 +1,8 @@
 package test.com.github.gs618.sprouts.programflow.process;
 
-import com.github.gs618.sprouts.programflow.BaseProcess;
-import com.github.gs618.sprouts.programflow.steps.StepChoice;
-import com.github.gs618.sprouts.programflow.steps.StepParallel;
+import com.github.gs618.sprouts.programflow.Process;
+import com.github.gs618.sprouts.programflow.steps.ChoiceStep;
+import com.github.gs618.sprouts.programflow.steps.ParallelStep;
 import test.com.github.gs618.sprouts.programflow.step.StepAvi1080p;
 import test.com.github.gs618.sprouts.programflow.step.StepAvi480p;
 import test.com.github.gs618.sprouts.programflow.step.StepAvi720p;
@@ -14,7 +14,7 @@ import test.com.github.gs618.sprouts.programflow.step.StepMp41080p;
 import test.com.github.gs618.sprouts.programflow.step.StepMp4480p;
 import test.com.github.gs618.sprouts.programflow.step.StepMp4720p;
 
-public class GenerateVideoProcessWithoutFirstStep extends BaseProcess {
+public class GenerateVideoProcessWithoutFirstStep extends Process {
 
 	public GenerateVideoProcessWithoutFirstStep() {
 		super();
@@ -22,7 +22,7 @@ public class GenerateVideoProcessWithoutFirstStep extends BaseProcess {
 
 	@Override
 	public void build() {
-		StepChoice stepVideoTypeChecker = StepChoice.newInstance();
+		ChoiceStep stepVideoTypeChecker = ChoiceStep.newInstance();
 		StepAvi480p stepAvi480p = new StepAvi480p();
 		StepAvi720p stepAvi720p = new StepAvi720p();
 		StepAvi1080p stepAvi1080p = new StepAvi1080p();
@@ -32,9 +32,9 @@ public class GenerateVideoProcessWithoutFirstStep extends BaseProcess {
 		StepMp4480p stepMp4480p = new StepMp4480p();
 		StepMp4720p stepMp4720p = new StepMp4720p();
 		StepMp41080p stepMp41080p = new StepMp41080p();
-		StepParallel stepAviParser = StepParallel.newInstance();
-		StepParallel stepMkvParser = StepParallel.newInstance();
-		StepParallel stepMp4Parser = StepParallel.newInstance();
+		ParallelStep stepAviParser = ParallelStep.newInstance();
+		ParallelStep stepMkvParser = ParallelStep.newInstance();
+		ParallelStep stepMp4Parser = ParallelStep.newInstance();
 		StepEnd stepEnd = new StepEnd();
 
 		stepVideoTypeChecker.addChoice(input -> "AVI".equalsIgnoreCase(input.getData("TYPE")), stepAviParser)

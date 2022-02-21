@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class Input {
 
-	Map<String, Object> data = new HashMap<>(20);
+	final Map<String, Object> data = new HashMap<>(20);
 
 	/**
 	 * Get data by key

@@ -19,7 +19,7 @@ public class AppTest {
 		input.putData("TYPE", "AVI");
 		Output output = new Output();
 		generateVideoProcessWithoutFirstStep.start(input, output);
-		generateVideoProcessWithoutFirstStep.printStepTrace(output);
+		output.printStepTrace();
 	}
 
 	@Test
@@ -30,7 +30,7 @@ public class AppTest {
 		input.putData("TYPE", "MP3");
 		Output output = new Output();
 		generateVideoProcess.start(input, output);
-		generateVideoProcess.printStepTrace(output);
+		output.printStepTrace();
 	}
 
 	@Test
@@ -41,7 +41,7 @@ public class AppTest {
 		input.putData("TYPE", "AVI");
 		Output output = new Output();
 		generateVideoProcess.start(input, output);
-		generateVideoProcess.printStepTrace(output);
+		output.printStepTrace();
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class AppTest {
 		input.putData("TYPE", "MP4");
 		Output output = new Output();
 		generateVideoProcess.start(input, output);
-		generateVideoProcess.printStepTrace(output);
+		output.printStepTrace();
 	}
 
 	@Test
@@ -63,7 +63,7 @@ public class AppTest {
 		input.putData("TYPE", "MKV");
 		Output output = new Output();
 		generateVideoProcess.start(input, output);
-		generateVideoProcess.printStepTrace(output);
+		output.printStepTrace();
 	}
 
 }
