@@ -1,6 +1,6 @@
 ## sprouts-program-flow
 
-代码流程
+### Workflows
 
 - [x] 顺序流 
 
@@ -10,5 +10,8 @@
 
 - [x] 循环流 (for loop)
 
+### class diagram
+![image](images/Workflow.png)
 
-![image](uml/Workflow.png)
+### the workflow of the unit test
+![image](images/workflow_unit_test.png)
